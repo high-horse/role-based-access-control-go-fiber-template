@@ -3,10 +3,10 @@ package auth
 import (
 	"log"
 	"net/http"
-	"rpba-app/db/pool"
-	"rpba-app/helpers"
-	"rpba-app/pkg/models"
-	"rpba-app/pkg/utils"
+	"rbac/db/pool"
+	"rbac/helpers"
+	"rbac/pkg/models"
+	"rbac/pkg/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"

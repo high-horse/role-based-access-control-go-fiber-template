@@ -3,9 +3,9 @@ package auth
 import (
 	"errors"
 	"fmt"
-	"rpba-app/db/pool"
-	"rpba-app/pkg/models"
-	"rpba-app/pkg/utils"
+	"rbac/db/pool"
+	"rbac/pkg/models"
+	"rbac/pkg/utils"
 
 	"gorm.io/gorm"
 )

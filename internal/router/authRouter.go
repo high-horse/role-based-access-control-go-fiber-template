@@ -1,9 +1,9 @@
 package router
 
 import (
-	// "rpba-app/internal/auth"
+	// "rbac/internal/auth"
 
-	"rpba-app/internal/auth"
+	"rbac/internal/auth"
 
 	"github.com/gofiber/fiber/v2"
 )

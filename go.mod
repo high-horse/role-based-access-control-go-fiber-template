@@ -1,4 +1,4 @@
-module rpba-app
+module rbac
 
 go 1.23.4
 

@@ -2,7 +2,7 @@ package auth
 
 import (
 	// "errors"
-	"rpba-app/pkg/models"
+	"rbac/pkg/models"
 	"strings"
 	"sync"
 )

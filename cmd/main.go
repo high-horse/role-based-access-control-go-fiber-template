@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"rpba-app/db/config"
-	"rpba-app/db/pool"
-	"rpba-app/internal/router"
+	"rbac/db/config"
+	"rbac/db/pool"
+	"rbac/internal/router"
 
 	"syscall"
 
@@ -17,12 +17,12 @@ import (
 
 func main() {
 	confg := config.LoadConfig()
-	err := pool.ConnectDB(confg)
+	err := pool.rbac(confg)
 	if err != nil {
 		log.Fatalf("could not connect to the database: %v", err)
 	}
 
-	defer pool.DisconnectDb()
+	defer pool.Disrbac()
 
 	serve()
 }

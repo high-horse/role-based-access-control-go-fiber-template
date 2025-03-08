@@ -3,8 +3,8 @@ package pool
 import (
 	"fmt"
 	"log"
-	"rpba-app/db/config"
-	"rpba-app/pkg/models"
+	"rbac/db/config"
+	"rbac/pkg/models"
 	"time"
 
 	"gorm.io/gorm"
@@ -16,7 +16,7 @@ import (
 
 var DB *gorm.DB
 
-func ConnectDB(cfg *config.Config) error {
+func rbac(cfg *config.Config) error {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s",
 		cfg.DBHost, cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.DBPort, cfg.DBSSLMode,
@@ -53,7 +53,7 @@ func ConnectDB(cfg *config.Config) error {
 	return nil
 }
 
-func DisconnectDb(){
+func Disrbac(){
 	if DB != nil {
 		sqlDB, err := DB.DB()
 		if err != nil {

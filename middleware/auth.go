@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"net/http"
-	"rpba-app/pkg/utils"
+	"rbac/pkg/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
