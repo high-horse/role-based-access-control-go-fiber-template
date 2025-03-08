@@ -60,6 +60,7 @@ func Register(c *fiber.Ctx) error {
 		return err
 	}
 
+	utils.LogToFile(registerForm)
 	validationErrors, err := utils.ValidateRequest(registerForm)
 	if err != nil {
 		return helpers.ResponseError(c, 500, "Internal Server Error")
