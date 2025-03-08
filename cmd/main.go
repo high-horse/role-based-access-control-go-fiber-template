@@ -17,12 +17,12 @@ import (
 
 func main() {
 	confg := config.LoadConfig()
-	err := pool.rbac(confg)
+	err := pool.ConnectDB(confg)
 	if err != nil {
 		log.Fatalf("could not connect to the database: %v", err)
 	}
 
-	defer pool.Disrbac()
+	defer pool.DisconnectDB()
 
 	serve()
 }

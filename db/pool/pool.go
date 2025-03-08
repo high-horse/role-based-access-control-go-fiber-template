@@ -16,7 +16,7 @@ import (
 
 var DB *gorm.DB
 
-func rbac(cfg *config.Config) error {
+func ConnectDB(cfg *config.Config) error {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s",
 		cfg.DBHost, cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.DBPort, cfg.DBSSLMode,
@@ -53,7 +53,7 @@ func rbac(cfg *config.Config) error {
 	return nil
 }
 
-func Disrbac(){
+func DisconnectDB(){
 	if DB != nil {
 		sqlDB, err := DB.DB()
 		if err != nil {
