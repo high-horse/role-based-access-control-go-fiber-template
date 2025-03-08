@@ -31,6 +31,10 @@ func Login(c *fiber.Ctx) error {
 		// Some other error occurred
 		return helpers.ResponseError(c, http.StatusInternalServerError, "Internal Server Error")
 	}
+	
+	if correct := utils.CheckPasswordHash(loginRequest.Password, user.Password); !correct{
+			return helpers.ResponseError(c, http.StatusUnauthorized, "Invalid username or password.")
+	}
 
 	token, err := utils.GenerateToken(loginRequest.Password, []string{}, []string{})
 	if err != nil {
@@ -102,4 +106,10 @@ func Register(c *fiber.Ctx) error {
 		Status:  true,
 		Message: "Successfully created user",
 	})
+}
+
+
+func Profile(c *fiber.Ctx)error {
+	// todo: set profile in ctx in middleware and get it from the ctx and return
+	return nil
 }

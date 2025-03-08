@@ -14,7 +14,7 @@ func AuthRoutes(app *fiber.App) {
 	r.Post("login", auth.Login)
 	r.Post("register", auth.Register)
 	
-	r.Get("test-user", getUsers)
+	r.Get("profile", auth.Profile)
 	r.Get("hello", hello)
 	
 }
