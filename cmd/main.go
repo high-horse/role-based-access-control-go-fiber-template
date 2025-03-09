@@ -52,7 +52,9 @@ func serve() {
 		return c.SendString("Hello, World!")
 	})
 
+	router.NonAuthRoutes(app)
 	router.AuthRoutes(app)
+	
 	// List all registered routes
 	for _, routes := range app.Stack() {
 		// Iterate over individual routes in the group

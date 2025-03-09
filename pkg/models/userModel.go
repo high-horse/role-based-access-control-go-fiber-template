@@ -21,6 +21,8 @@ type User struct {
 
 	// Relationship to Role through the User's RoleID
 	Role Role `gorm:"foreignKey:RoleID"`
+	
+	// Permission []Permission ``
 
 	// Many-to-many relationship with Role through the 'role_has_permissions' table
 	Roles []Role `gorm:"many2many:role_has_permissions;"`

@@ -25,16 +25,8 @@ func AuthenticateUser(username, password string) (string, error) {
 		return "", errors.New("invalid password")
 	}
 
-	var roles []string
-	var permissions []string
-
-	roles = append(roles, user.Role.Name)
-
-	// Add the permission names associated with the user's role
-	for _, permission := range user.Role.Permissions {
-		permissions = append(permissions, permission.Name)
-	}
-	token, err := utils.GenerateToken(user.Username, roles, permissions)
+	
+	token, err := utils.GenerateToken(user.Username, user.Role.Name, []string{})
 	if err != nil {
 		return "", fmt.Errorf("failed to generate token: %w", err)
 	}

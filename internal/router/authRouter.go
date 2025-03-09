@@ -4,19 +4,26 @@ import (
 	// "rbac/internal/auth"
 
 	"rbac/internal/auth"
+	"rbac/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func AuthRoutes(app *fiber.App) {
+func NonAuthRoutes(app *fiber.App) {
 	r := app.Group("/auth")
 	
 	r.Post("login", auth.Login)
 	r.Post("register", auth.Register)
 	
-	r.Get("profile", auth.Profile)
+	// r.Get("profile", auth.Profile)
 	r.Get("hello", hello)
 	
+}
+
+func AuthRoutes(app *fiber.App) {
+	r := app.Group("/auth").Use(middleware.JWTAuthMiddleware())
+	
+	r.Get("profile", auth.Profile)
 }
 
 func getUsers(c *fiber.Ctx) error {

@@ -9,7 +9,6 @@ import (
 	"rbac/pkg/utils"
 
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
 func Login(c *fiber.Ctx) error {
@@ -21,32 +20,14 @@ func Login(c *fiber.Ctx) error {
 		helpers.ResponseError(c, http.StatusBadRequest, "Invalid Request")
 	}
 
-	var user models.User
-	result := pool.DB.Where("username = ?", loginRequest.Username).First(&user)
-	if result.Error != nil {
-		if result.Error == gorm.ErrRecordNotFound {
-			// User not found, return error
-			return helpers.ResponseError(c, http.StatusUnauthorized, "Invalid Username or Password")
-		}
-		// Some other error occurred
-		return helpers.ResponseError(c, http.StatusInternalServerError, "Internal Server Error")
-	}
-	
-	if correct := utils.CheckPasswordHash(loginRequest.Password, user.Password); !correct{
-			return helpers.ResponseError(c, http.StatusUnauthorized, "Invalid username or password.")
-	}
-
-	token, err := utils.GenerateToken(loginRequest.Password, []string{}, []string{})
+	token, err := AuthenticateUser(loginRequest.Username, loginRequest.Password)
 	if err != nil {
-		helpers.ResponseError(c, http.StatusInternalServerError, "Internal Server error")
+		return helpers.ResponseError(c, 500, "Internal Server Error")
 	}
 
-	return helpers.ResponseJson(c, http.StatusOK, struct {
-		Status bool   `json:"status"`
-		Token  string `json:"token"`
-	}{
-		Status: true,
-		Token:  token,
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status": true,
+		"token":  token,
 	})
 }
 
@@ -69,6 +50,7 @@ func Register(c *fiber.Ctx) error {
 	if err != nil {
 		return helpers.ResponseError(c, 500, "Internal Server Error")
 	}
+	
 	// If there are validation errors, use the helper to handle them
 	if len(validationErrors) > 0 {
 		// Respond with a 422 status code for validation errors.
@@ -98,18 +80,18 @@ func Register(c *fiber.Ctx) error {
 		return helpers.ResponseError(c, 500, err.Error())
 	}
 
-	// Return success response
-	return helpers.ResponseJson(c, 200, struct {
-		Status  bool   `json:"status"`
-		Message string `json:"message"`
-	}{
-		Status:  true,
-		Message: "Successfully created user",
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"tatus":  true,
+		"message": "Successfully created user",
 	})
+
 }
 
 
 func Profile(c *fiber.Ctx)error {
-	// todo: set profile in ctx in middleware and get it from the ctx and return
-	return nil
+	
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"data":  GetAuthUser(), // You can also return the structured claims
+		"status":  true,
+	})
 }
