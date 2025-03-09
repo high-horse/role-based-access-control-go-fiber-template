@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"rbac/db/config"
-	"rbac/pkg/models"
+	// "rbac/pkg/models"
 	"time"
 
 	"gorm.io/gorm"
@@ -44,10 +44,10 @@ func ConnectDB(cfg *config.Config) error {
 
 	log.Println("Successfully connected to the database")
 	
-	err = DB.AutoMigrate(models.RegisterModels...)
-	if err != nil {
-		return fmt.Errorf("AutoMigrate failed: %w", err)
-	}
+	// err = DB.AutoMigrate(models.RegisterModels...)
+	// if err != nil {
+	// 	return fmt.Errorf("AutoMigrate failed: %w", err)
+	// }
 
 	log.Println("GORM models mapped to migrated tables")
 	return nil

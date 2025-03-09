@@ -34,7 +34,6 @@ func AuthenticateUser(username, password string) (string, error) {
 	for _, permission := range user.Role.Permissions {
 		permissions = append(permissions, permission.Name)
 	}
-	
 	token, err := utils.GenerateToken(user.Username, roles, permissions)
 	if err != nil {
 		return "", fmt.Errorf("failed to generate token: %w", err)

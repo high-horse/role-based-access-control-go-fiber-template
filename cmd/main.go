@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -11,9 +12,8 @@ import (
 	"syscall"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
-
-
 
 func main() {
 	confg := config.LoadConfig()
@@ -36,22 +36,29 @@ func waitsignal() {
 	log.Println("Shutting down the server...")
 }
 
-
 func serve() {
 	log.Println("starting the server ...")
 	app := fiber.New(fiber.Config{
-	    Prefork:       false,
-	    CaseSensitive: false,
-	    // ColorScheme: true,
-	    StrictRouting: true,
-	    ServerHeader:  "Fiber",
-	    AppName: "role-permission-server v1.0.1",
+		Prefork:       true,
+		CaseSensitive: false,
+		// ColorScheme: true,
+		StrictRouting: true,
+		ServerHeader:  "Fiber",
+		AppName:       "role-permission-server v1.0.1",
 	})
+	app.Use(logger.New())
+	
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
-	
-	router.AuthRoutes(app)
 
+	router.AuthRoutes(app)
+	// List all registered routes
+	for _, routes := range app.Stack() {
+		// Iterate over individual routes in the group
+		for _, route := range routes {
+			fmt.Printf("Method: %s\tPath: %s\n", route.Method, route.Path)
+		}
+	}
 	log.Fatal(app.Listen(":8000"))
 }
