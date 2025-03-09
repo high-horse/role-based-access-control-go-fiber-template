@@ -17,8 +17,8 @@ type Permission struct {
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 
 	// Creator of the permission
-	Creator     User          `gorm:"foreignKey:CreatedBy;constraint:OnDelete:CASCADE;"`
+	// Creator     User          `gorm:"foreignKey:CreatedBy;constraint:OnDelete:CASCADE;"`
 	
 	// Many-to-many relationship with Roles through the 'role_has_permissions' table
-	Roles       []Role        `gorm:"many2many:role_has_permissions;"`
+	// Roles       []Role        `gorm:"many2many:role_has_permissions;"`
 }

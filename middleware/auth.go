@@ -50,7 +50,7 @@ func getUser(c *fiber.Ctx) (*models.User, error) {
 	}
 	
 	var user models.User
-	if err := pool.DB.Where("username = ?", claims.Username).First(&user).Error; err != nil {
+	if err := pool.DB.Preload("Role.Permissions").Where("username = ?", claims.Username).First(&user).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, errors.New("record not found")
 		}

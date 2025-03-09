@@ -31,13 +31,13 @@ func UserHasRole(role string) (bool) {
 	if user == nil {
 		return false
 	}
-	
-	for _, r := range user.Roles {
-		if strings.EqualFold(r.Name, role) {
-			return true
-		}
-	}
-	return false
+	return strings.EqualFold(user.Role.Name, role) 
+	// for _, r := range user.Roles {
+	// 	if strings.EqualFold(r.Name, role) {
+	// 		return true
+	// 	}
+	// }
+	// return false
 }
 
 func UserHasPermission(permission string) (bool) {
@@ -45,14 +45,19 @@ func UserHasPermission(permission string) (bool) {
 	if user == nil {
 		return false
 	}
-
-	// Loop through the user's roles and check for the desired permission
-	for _, r := range user.Roles {
-		for _, p := range r.Permissions {
-			if strings.EqualFold(p.Name, permission) {
-				return true
-			}
+	for _, p := range user.Role.Permissions{
+		if strings.EqualFold(p.Name, permission){
+			return true
 		}
 	}
 	return false
+
+	// Loop through the user's roles and check for the desired permission
+	// for _, r := range user.Roles {
+	// 	for _, p := range r.Permissions {
+	// 		if strings.EqualFold(p.Name, permission) {
+	// 			return true
+	// 		}
+	// 	}
+	// }
 }

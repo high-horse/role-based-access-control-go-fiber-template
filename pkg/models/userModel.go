@@ -25,7 +25,7 @@ type User struct {
 	// Permission []Permission ``
 
 	// Many-to-many relationship with Role through the 'role_has_permissions' table
-	Roles []Role `gorm:"many2many:role_has_permissions;"`
+	// Roles []Role `gorm:"many2many:role_has_permissions;"`
 }
 
 

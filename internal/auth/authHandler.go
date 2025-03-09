@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"rbac/db/pool"
@@ -89,6 +90,8 @@ func Register(c *fiber.Ctx) error {
 
 
 func Profile(c *fiber.Ctx)error {
+	fmt.Println("user has role :", 	UserHasRole("user"))
+	fmt.Println("user has permission :", 	UserHasPermission("create-post"))
 	
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"data":  GetAuthUser(), // You can also return the structured claims
